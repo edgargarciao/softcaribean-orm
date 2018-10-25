@@ -4,10 +4,10 @@
 	<sesion-factoria>
 		
 		<!-- Database Connection Settings -->
-		<property name="softcaribbean.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="softcaribbean.connection.url">jdbc:mysql://localhost:3306/SoftCaribbeanDatabase</property>
-		<property name="softcaribbean.connection.username">root</property>
-		<property name="softcaribbean.connection.password">admin@123</property>		
+		<propiedad name="softcaribbean.driver_class">com.mysql.jdbc.Driver</propiedad>
+		<propiedad name="softcaribbean.connection.url">jdbc:mysql://localhost:3306/SoftCaribbeanDatabase</propiedad>
+		<propiedad name="softcaribbean.connection.username">root</propiedad>
+		<propiedad name="softcaribbean.connection.password">root</propiedad>		
 
 		<!-- Mapping With Model Class Containing Annotations -->
 		<mapeador class="com.jcg.hibernate.annotations.Student" />
