@@ -76,7 +76,8 @@ public class XmlMgr {
         System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
         // System.out.println("Node Value =" + tempNode.getTextContent());
 
-        if (tempNode.getNodeName().equals(PROPIEDAD) && tempNode.hasAttributes()) {
+        if ((tempNode.getNodeName().equals(PROPIEDAD) ||  tempNode.getNodeName().equals(MAPEADOR))
+            && tempNode.hasAttributes()) {
 
           // get attributes names and values
           NamedNodeMap nodeMap = tempNode.getAttributes();
@@ -88,8 +89,11 @@ public class XmlMgr {
                 || node.getNodeValue().equals(SOFTCARIBBEAN_URL)
                 || node.getNodeValue().equals(SOFTCARIBBEAN_USERNAME)
                 || node.getNodeValue().equals(SOFTCARIBBEAN_PASSWORD)
-                || node.getNodeValue().equals(MAPEADOR)) {
+                ) {
               properties.setProperty(node.getNodeValue(), tempNode.getTextContent());
+            }else if(tempNode.getNodeName().equals(MAPEADOR)) {
+              System.out.println("entrooooo");
+              properties.setProperty(MAPEADOR, node.getNodeValue());
             }
 
             System.out.println("attr name : " + node.getNodeName());
@@ -97,7 +101,7 @@ public class XmlMgr {
           }
           
         }
-        System.out.println("value --> "+tempNode.getTextContent());
+        //System.out.println("value --> "+tempNode.getTextContent());
         if (tempNode.hasChildNodes()) {
           // loop again if has child nodes
           printNote(tempNode.getChildNodes(), properties);

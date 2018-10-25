@@ -10,7 +10,8 @@
 		<propiedad name="softcaribbean.connection.password">root</propiedad>		
 
 		<!-- Mapping With Model Class Containing Annotations -->
-		<mapeador class="com.jcg.hibernate.annotations.Student" />
+		<mapeador classes="com.softcaribbean.orm.classes" />
+						   
 		
 	</sesion-factoria>
 </softcaribbean-configuration>
