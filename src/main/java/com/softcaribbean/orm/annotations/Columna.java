@@ -1,25 +1,34 @@
 package com.softcaribbean.orm.annotations;
 
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+@Target({METHOD, FIELD})
+@Retention(RUNTIME)
 public @interface Columna {
 
 
-  String name() default "";
+  String nombre() default "";
 
-  boolean unique() default false;
+  boolean unico() default false;
 
-  boolean nullable() default true;
+  boolean permiteNulo() default true;
 
   boolean insertable() default true;
 
-  boolean updatable() default true;
+  boolean actualizable() default true;
 
   String columnDefinition() default "";
 
-  String table() default "";
+  String tabla() default "";
 
-  int length() default 255;
+  int tamaño() default 255;
 
   int precision() default 0;
 
-  int scale() default 0;
+  int escala() default 0;
 }

@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
-public @interface MuchosAMuchos {
+public @interface ValorGenerado {
 
-  Class targetEntity() default void.class;
 }

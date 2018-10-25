@@ -1,4 +1,4 @@
-package com.softcaribbean.JDBC;
+package com.softcaribbean.orm.JDBC;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,21 +12,31 @@ public class Database {
 
   private DataSource dataSource;
 
-  public Database(String url,String usuario,String contraseña){
+  public Database(String driver, String url,String usuario,String contraseña){
+    
+    try {
+      Class.forName(driver);
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    
+    System.out.println(url.split(":")[1]);
+    
     dataSource = new DriverManagerDataSource(url,usuario,contraseña);
+    
   }
   
   
-  public int executeDml(String query)  {
+  public int ejecutarDml(String sql)  {
 
     try {
       NamedParameterJdbcTemplate namedParameterJdbcTemplate =
           new NamedParameterJdbcTemplate(dataSource);
+      
+      int filasAfectadas = namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource());
 
-      MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-      int affectedRows = namedParameterJdbcTemplate.update(query, mapSqlParameterSource);
-
-      return affectedRows;
+      return filasAfectadas;
     } catch (Exception genericException) {
       Logger.getLogger(this.getClass().getName()).log(Level.INFO, genericException.getMessage(), genericException);
       throw new RuntimeException(genericException);
@@ -43,18 +53,24 @@ public class Database {
    * @throws AppException If there is any problem in the execution.
    */
   
-  public int executeDml(String query, MapSqlParameterSource  parameterMap) {
+  public int ejecutarDml(String sql, MapSqlParameterSource  parameterMap) {
 
     try {
       NamedParameterJdbcTemplate namedParameterJdbcTemplate =
           new NamedParameterJdbcTemplate(dataSource);
 
-      int affectedRows = namedParameterJdbcTemplate.update(query, parameterMap);
+      int filasAfectadas = namedParameterJdbcTemplate.update(sql, parameterMap);
 
-      return affectedRows;
+      return filasAfectadas;
     } catch (Exception genericException) {
       Logger.getLogger(this.getClass().getName()).log(Level.INFO, genericException.getMessage(), genericException);
       throw new RuntimeException(genericException);
     }
+  }
+  
+  public static void main(String[] args) {
+    Database d = new Database("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/hibernateannotationsdb", "root", "");
+    
+    d.ejecutarDml("INSERT INTO student(name,age) VALUES('juan',10)");
   }
 }

@@ -7,26 +7,16 @@ import com.softcaribbean.orm.factory.SesionFactoria;
 
 public class EstudiantesRepositorio {
 
-  // Method Used To Create The Hibernate's SessionFactory Object
+  
   public static SesionFactoria getSessionFactory() {
 
-    // Creating Configuration Instance & Passing Hibernate Configuration File
-    Configuracion configObj = new Configuracion("hibernate.cfg.xml");
+    SesionFactoria sesion = new Configuracion("application.xml").crearSesionFactoria();
 
-    
-
-    // Since Hibernate Version 4.x, Service Registry Is Being Used
-    // ServiceRegistry serviceRegistryObj = new
-    // StandardServiceRegistryBuilder().applySettings(configObj.getProperties()).build();
-
-    // Creating Hibernate Session Factory Instance
-    // SessionFactory factoryObj = configObj.buildSessionFactory(serviceRegistryObj);
-    // return factoryObj;
-    return null;
+    return sesion;
   }
 
   public int insertarEstudiante(Estudiante estudiante) {
-
+    SesionFactoria sesion = getSessionFactory();
 
 
     return 0;
