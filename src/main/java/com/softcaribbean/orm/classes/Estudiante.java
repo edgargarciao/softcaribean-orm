@@ -21,8 +21,9 @@ public class Estudiante {
   @Columna(nombre="fecha")
   private Date fechaNacimiento;
 
-  public Estudiante(String nombres, Date fechaNacimiento) {
+  public Estudiante(int id, String nombres, Date fechaNacimiento) {
     super();
+    this.id = id;
     this.nombres = nombres;
     this.fechaNacimiento = fechaNacimiento;
   }

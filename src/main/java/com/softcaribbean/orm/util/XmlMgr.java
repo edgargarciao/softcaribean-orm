@@ -56,7 +56,7 @@ public class XmlMgr {
       if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
 
         // get node name and value
-        System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
+        //System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
         // System.out.println("Node Value =" + tempNode.getTextContent());
 
         if ((tempNode.getNodeName().equals(ORM.PROPIEDAD) ||  tempNode.getNodeName().equals(ORM.MAPEADOR))

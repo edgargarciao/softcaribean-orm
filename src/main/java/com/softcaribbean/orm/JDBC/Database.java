@@ -69,8 +69,8 @@ public class Database {
   }
   
   public static void main(String[] args) {
-    Database d = new Database("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/hibernateannotationsdb", "root", "");
+    Database d = new Database("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/SoftCaribbeanDatabase ", "root", "root");
     
-    d.ejecutarDml("INSERT INTO student(name,age) VALUES('juan',10)");
+    d.ejecutarDml("INSERT INTO estudiante(nombre,fecha) VALUES('juan','1994-10-02')");
   }
 }

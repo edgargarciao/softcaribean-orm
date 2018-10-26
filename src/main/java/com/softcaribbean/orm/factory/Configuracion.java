@@ -1,16 +1,9 @@
 package com.softcaribbean.orm.factory;
 
-import java.lang.annotation.Annotation;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.springframework.core.annotation.AnnotationConfigurationException;
-import com.mysql.cj.api.Session;
-import com.softcaribbean.orm.annotations.Entidad;
-import com.softcaribbean.orm.annotations.Tabla;
 import com.softcaribbean.orm.classes.Estudiante;
 import com.softcaribbean.orm.constants.ORM;
 import com.softcaribbean.orm.util.ClassMgr;
@@ -48,7 +41,7 @@ public class Configuracion {
 
   public static void main(String[] args) {
 
-    new Configuracion("application.xml").crearSesionFactoria().guardar(new Estudiante("Miguel", new Date()));
+    new Configuracion("application.xml").crearSesionFactoria().guardar(new Estudiante(1000,"Miguel", new Date()));
   }
 
 

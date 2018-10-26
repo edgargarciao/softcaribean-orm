@@ -104,33 +104,36 @@ public class ClassMgr {
       }
 
       List<String> campos = new ArrayList<String>();
+      Map<String,String> nombreCampos = new HashMap<String, String>();
 
       // Se cargan los atributos
       for (Field campo : clase.getDeclaredFields()) {
-        String nombreCampo = campo.getName();
+        
+        String nombreAtributoBD = campo.getName();
         for (Annotation anotacion : campo.getAnnotations()) {
           if(anotacion instanceof Id){
-            mapaDeConfiguracion.put(ORM.ID, nombreCampo);            
+            mapaDeConfiguracion.put(ORM.ID, nombreAtributoBD);            
           }else if(anotacion instanceof ValorGenerado){
             
-            mapaDeConfiguracion.put(ORM.VALOR_GENERADO, nombreCampo); 
+            mapaDeConfiguracion.put(ORM.VALOR_GENERADO, nombreAtributoBD); 
             
           }else if(anotacion instanceof Columna){
             Columna columna = (Columna) anotacion;
             
-            if(columna.nombre() != null && columna.nombre().equals("")){
-              nombreCampo = columna.nombre();
+            if(columna.nombre() != null && !columna.nombre().equals("")){
+              nombreAtributoBD = columna.nombre();
             }
           }
         }        
-        campos.add(nombreCampo);
+        campos.add(nombreAtributoBD);
+        nombreCampos.put(campo.getName(), nombreAtributoBD);
       }
 
       mapaDeConfiguracion.put(ORM.COLUMNA, campos);
+      mapaDeConfiguracion.put(ORM.NOMBRE_COLUMNA, nombreCampos);
 
       clases.put(clase, mapaDeConfiguracion);
-
-
+     
     }
     System.out.println("reeeee --> "+clases);
     return clases;
