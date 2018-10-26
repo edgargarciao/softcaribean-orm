@@ -1,4 +1,4 @@
-package com.softcaribbean.orm.constants;
+package com.softcaribbean.orm.dto;
 
 public class ORM {
   
@@ -29,11 +29,6 @@ public class ORM {
   public static final String ERROR_SESSION_FACTORIA =
       "Despues de la etiqueta debe contener la etiqueta softcaribbean-configuration";
   
-
-  /**
-   * Constantes de la conexión a base de datos
-   */
   
-  public static final String ERROR_DATABASE_DRIVE_CLASS = "El driver '%s' no es reconocido.";
   
 }

@@ -116,7 +116,7 @@ public class ClassMgr {
             nombreCampos.put(campo.getName(), nombreAtributoBD);
           }else if(anotacion instanceof ValorGenerado){
             
-            mapaDeConfiguracion.put(ORM.VALOR_GENERADO, nombreAtributoBD); 
+            mapaDeConfiguracion.put(ORM.VALOR_GENERADO, nombreAtributoBD);
             campos.add(nombreAtributoBD);
             nombreCampos.put(campo.getName(), nombreAtributoBD);
           }else if(anotacion instanceof Columna){
@@ -124,12 +124,11 @@ public class ClassMgr {
             
             if(columna.nombre() != null && !columna.nombre().equals("")){
               nombreAtributoBD = columna.nombre();
-              campos.add(nombreAtributoBD);
-              nombreCampos.put(campo.getName(), nombreAtributoBD);
             }
+            campos.add(nombreAtributoBD);
+            nombreCampos.put(campo.getName(), nombreAtributoBD);
           }
-        }        
-        
+        }                      
       }
 
       mapaDeConfiguracion.put(ORM.COLUMNA, campos);
@@ -138,7 +137,6 @@ public class ClassMgr {
       clases.put(clase, mapaDeConfiguracion);
      
     }
-    System.out.println("reeeee --> "+clases);
     return clases;
   }
 

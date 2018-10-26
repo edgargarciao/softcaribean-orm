@@ -1,4 +1,4 @@
-package com.softcaribbean.orm.factory;
+package com.softcaribbean.orm.dto;
 
 public class DatosConexion {
 
