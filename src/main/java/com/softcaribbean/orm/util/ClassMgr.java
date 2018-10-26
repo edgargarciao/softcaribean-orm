@@ -5,7 +5,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,21 +111,25 @@ public class ClassMgr {
         String nombreAtributoBD = campo.getName();
         for (Annotation anotacion : campo.getAnnotations()) {
           if(anotacion instanceof Id){
-            mapaDeConfiguracion.put(ORM.ID, nombreAtributoBD);            
+            mapaDeConfiguracion.put(ORM.ID, nombreAtributoBD); 
+            campos.add(nombreAtributoBD);
+            nombreCampos.put(campo.getName(), nombreAtributoBD);
           }else if(anotacion instanceof ValorGenerado){
             
             mapaDeConfiguracion.put(ORM.VALOR_GENERADO, nombreAtributoBD); 
-            
+            campos.add(nombreAtributoBD);
+            nombreCampos.put(campo.getName(), nombreAtributoBD);
           }else if(anotacion instanceof Columna){
             Columna columna = (Columna) anotacion;
             
             if(columna.nombre() != null && !columna.nombre().equals("")){
               nombreAtributoBD = columna.nombre();
+              campos.add(nombreAtributoBD);
+              nombreCampos.put(campo.getName(), nombreAtributoBD);
             }
           }
         }        
-        campos.add(nombreAtributoBD);
-        nombreCampos.put(campo.getName(), nombreAtributoBD);
+        
       }
 
       mapaDeConfiguracion.put(ORM.COLUMNA, campos);

@@ -41,7 +41,7 @@ public class Configuracion {
 
   public static void main(String[] args) {
 
-    new Configuracion("application.xml").crearSesionFactoria().guardar(new Estudiante(1000,"Miguel", new Date()));
+    new Configuracion("application.xml").crearSesionFactoria().guardar(new Estudiante(1000,"JUAN", new Date(),10));
   }
 
 

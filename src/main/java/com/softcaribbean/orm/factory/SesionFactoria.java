@@ -78,12 +78,6 @@ public class SesionFactoria {
         }
       }
     }
-    
-
-    System.out.println("SQL --> " + sql);
-    for(String key : mapaParametrosSql.getValues().keySet()) {
-      System.out.println("KEY --> "+key+ " ; "+" VALUE --> "+mapaParametrosSql.getValue(key));
-    }
 
     return database.ejecutarDml(sql,mapaParametrosSql);
   }

@@ -14,18 +14,22 @@ public class Estudiante {
   @Id
   @ValorGenerado
   private int id;
-  
-  @Columna(nombre="nombre")
+
+  @Columna(nombre = "nombre")
   private String nombres;
-  
-  @Columna(nombre="fecha")
+
+  @Columna(nombre = "fecha")
   private Date fechaNacimiento;
 
-  public Estudiante(int id, String nombres, Date fechaNacimiento) {
+  @Columna
+  private int edad;
+
+  public Estudiante(int id, String nombres, Date fechaNacimiento, int edad) {
     super();
     this.id = id;
     this.nombres = nombres;
     this.fechaNacimiento = fechaNacimiento;
+    this.edad = edad;
   }
 
   public int getId() {
@@ -51,6 +55,15 @@ public class Estudiante {
   public void setFechaNacimiento(Date fechaNacimiento) {
     this.fechaNacimiento = fechaNacimiento;
   }
+
+  public int getEdad() {
+    return edad;
+  }
+
+  public void setEdad(int edad) {
+    this.edad = edad;
+  }
+
 
 
 }
