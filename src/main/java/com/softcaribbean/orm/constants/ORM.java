@@ -9,8 +9,22 @@ public class ORM {
   public static final String TABLA          = "tabla";
   public static final String COLUMNA        = "columna";
   public static final String ID             = "id";
-  public static final String VALOR_GENERADO = "id";
+  public static final String VALOR_GENERADO = "id_generado";
   public static final String NOMBRE_COLUMNA = "nombre_columna";
+  public static final String COLUMNA_NULA   = "columna_nula";
+  public static final String FORANEOS       = "campos_foraneos";
+  public static final String MAPA_FORANEOS  = "mapa_foraneos";
+  
+  public static final String ERROR_SOFTCARIBBEAN_COLUMNA =
+      "La columna '%s' no puede ser nula.";
+  public static final String ERROR_SOFTCARIBBEAN_ENTIDAD_NULA =
+      "La etiqueta entidad no existe en la clase y es obligatoria.";
+  
+  public static final char PKG_SEPARATOR = '.';
+  public static final char DIR_SEPARATOR = '/';
+  public static final String CLASS_FILE_SUFFIX = ".class";
+  public static final String BAD_PACKAGE_ERROR =
+      "No hay recursos dentro del paquete '%s'. Estas seguro de que el paquete '%s'existe?";
   
   /**
    * Constantes de lectura del XML
@@ -34,6 +48,6 @@ public class ORM {
    * Constantes de la conexión a base de datos
    */
   
-  public static final String ERROR_DATABASE_DRIVE_CLASS = "El driver '%s' no es reconocido.";
+  public static final String ERROR_DATABASE_DRIVER_CLASS = "El driver '%s' no es reconocido.";
   
 }

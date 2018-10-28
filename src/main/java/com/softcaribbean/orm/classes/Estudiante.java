@@ -4,6 +4,7 @@ import java.util.Date;
 import com.softcaribbean.orm.annotations.Columna;
 import com.softcaribbean.orm.annotations.Entidad;
 import com.softcaribbean.orm.annotations.Id;
+import com.softcaribbean.orm.annotations.MuchosAUno;
 import com.softcaribbean.orm.annotations.Tabla;
 import com.softcaribbean.orm.annotations.ValorGenerado;
 
@@ -18,12 +19,12 @@ public class Estudiante {
   @Columna(nombre = "nombre")
   private String nombres;
 
-  @Columna(nombre = "fecha")
+  @Columna(nombre = "fecha", nulo=true)
   private Date fechaNacimiento;
 
   @Columna
   private int edad;
-
+  
   public Estudiante(int id, String nombres, Date fechaNacimiento, int edad) {
     super();
     this.id = id;
@@ -63,7 +64,5 @@ public class Estudiante {
   public void setEdad(int edad) {
     this.edad = edad;
   }
-
-
 
 }

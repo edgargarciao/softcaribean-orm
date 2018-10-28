@@ -29,8 +29,9 @@ public class Database {
     try {
       Class.forName(driver);
     } catch (ClassNotFoundException e) {
-      Logger.getLogger(this.getClass().getName()).log(Level.INFO, e.getMessage(), e);
-      throw new RuntimeException(String.format(ORM.ERROR_DATABASE_DRIVE_CLASS,driver));
+      e.printStackTrace();
+      //Logger.getLogger(this.getClass().getName()).log(Level.INFO, e.getMessage(), e);      
+      //throw new RuntimeException(String.format(ORM.ERROR_DATABASE_DRIVER_CLASS,driver),e);
     }
     
     // Crea la conexion a base de datos
@@ -94,7 +95,7 @@ public class Database {
         new NamedParameterJdbcTemplate(dataSource);
     KeyHolder keyHolder = new GeneratedKeyHolder();
     int affectedRows = namedParameterJdbcTemplate.update(query, parameterMap, keyHolder);
-    Long generatedId = keyHolder.getKey().longValue();
+    Long generatedId = (keyHolder.getKey() != null) ? keyHolder.getKey().longValue() : -1;
     resultDB.setResultado(affectedRows);
     resultDB.setLlaveGenerada(generatedId);
     return resultDB;

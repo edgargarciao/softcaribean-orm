@@ -4,7 +4,7 @@
 	<sesion-factoria>
 		
 		<!-- Database Connection Settings -->
-		<propiedad name="softcaribbean.driver_class">com.mysql.jdbc.Driver</propiedad>
+		<propiedad name="softcaribbean.driver_class">com.mysql.jdc.Driver</propiedad>
 		<propiedad name="softcaribbean.connection.url">jdbc:mysql://localhost:3306/SoftCaribbeanDatabase</propiedad>
 		<propiedad name="softcaribbean.connection.username">root</propiedad>
 		<propiedad name="softcaribbean.connection.password">root</propiedad>		

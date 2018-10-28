@@ -12,4 +12,5 @@ public @interface Columna {
 
   String nombre() default "";
 
+  boolean nulo() default false;
 }
