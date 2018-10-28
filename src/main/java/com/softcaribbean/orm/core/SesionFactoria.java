@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import javax.management.RuntimeErrorException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import com.softcaribbean.orm.JDBC.Database;
 import com.softcaribbean.orm.constants.ORM;
@@ -22,10 +23,21 @@ public class SesionFactoria {
     this.clasesMap = clasesMap;
   }
 
+  /**
+   * Metodo que permite insertar un objeto en la base de datos mapeada.
+   * @param objeto A insertarse
+   * @return La cantidad de filas afectadas.
+   */
   public int guardar(Object objeto) {
     return getSqlInserFromObject(objeto);
   }
 
+  
+  /**
+   * Metodo que permite obtener insertar un objeto en base de datos dado un modelo
+   * @param objeto a insertarse en la base de datos
+   * @return
+   */
   private int getSqlInserFromObject(Object objeto) {
 
     Map<String, Object> mapa = clasesMap.get(objeto.getClass());
@@ -58,10 +70,11 @@ public class SesionFactoria {
     MapSqlParameterSource mapaParametrosSql = new MapSqlParameterSource();
     Map<String, String> nombreCampos = (Map<String, String>) mapa.get(ORM.NOMBRE_COLUMNA);
     Map<String, Boolean> camposNulos = (Map<String, Boolean>) mapa.get(ORM.COLUMNA_NULA);
-    Map<String, Map<Class, Map<String, Object>>> camposMapaForaneos = (Map<String, Map<Class, Map<String, Object>>>) mapa.get(ORM.MAPA_FORANEOS);
-    Map<String,String> foraneos = (Map<String,String>) mapa.get(ORM.FORANEOS);
-    
-      
+    Map<String, Map<Class, Map<String, Object>>> camposMapaForaneos =
+        (Map<String, Map<Class, Map<String, Object>>>) mapa.get(ORM.MAPA_FORANEOS);
+    Map<String, String> foraneos = (Map<String, String>) mapa.get(ORM.FORANEOS);
+
+
     for (Field field : objeto.getClass().getDeclaredFields()) {
       field.setAccessible(true);
       String nombreCampoValor = nombreCampos.get(field.getName());
@@ -70,7 +83,7 @@ public class SesionFactoria {
           && !columnaVG.equals("")) {
         idField = field.getName();
       }
-      
+
       if (nombreCampoValor != null && !nombreCampoValor.equals("")) {
         try {
 
@@ -79,25 +92,24 @@ public class SesionFactoria {
               && valor == null) {
             throw new RuntimeException(String.format(ORM.COLUMNA_NULA, field.getName()));
           }
-          
+
           Object valueFinal = field.get(objeto);
-          
-          if(foraneos.containsKey(field.getName())) {
+
+          if (foraneos.containsKey(field.getName())) {
             Map<Class, Map<String, Object>> claseMapa = camposMapaForaneos.get(field.getName());
             String campoId = (String) claseMapa.get(field.getType()).get(ORM.ID);
-            
+
             try {
               Object c = field.get(objeto);
-              
+
               for (Field field2 : c.getClass().getDeclaredFields()) {
                 field2.setAccessible(true);
-                if(field2.getName().equals(campoId)) {
+                if (field2.getName().equals(campoId)) {
                   valueFinal = field2.get(c);
-                  //mapaParametrosSql.addValue(foraneos.get(field.getName()),valueFinal );
                 }
-              
+
               }
-              
+
             } catch (IllegalArgumentException e) {
               // TODO Auto-generated catch block
               e.printStackTrace();
@@ -106,9 +118,9 @@ public class SesionFactoria {
               e.printStackTrace();
             }
           }
-          
-            mapaParametrosSql.addValue(nombreCampoValor,valueFinal );
-         
+
+          mapaParametrosSql.addValue(nombreCampoValor, valueFinal);
+
         } catch (IllegalArgumentException e) {
           e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -160,6 +172,11 @@ public class SesionFactoria {
     return (String) ((entidad == null || entidad.equals("")) ? tabla : entidad);
   }
 
+  /**
+   * Metodo que permite actualizar un objeto dado un modelo
+   * @param objeto - Objeto mapeado a actualizarse
+   * @return La cantidad de filas afectadas
+   */
   public int actualizar(Object objeto) {
     Map<String, Object> mapa = clasesMap.get(objeto.getClass());
 
@@ -191,6 +208,10 @@ public class SesionFactoria {
     MapSqlParameterSource mapaParametrosSql = new MapSqlParameterSource();
     Map<String, String> nombreCampos = (Map<String, String>) mapa.get(ORM.NOMBRE_COLUMNA);
     Map<String, Boolean> camposNulos = (Map<String, Boolean>) mapa.get(ORM.COLUMNA_NULA);
+    Map<String, Map<Class, Map<String, Object>>> camposMapaForaneos =
+        (Map<String, Map<Class, Map<String, Object>>>) mapa.get(ORM.MAPA_FORANEOS);
+    Map<String, String> foraneos = (Map<String, String>) mapa.get(ORM.FORANEOS);
+
 
     for (Field field : objeto.getClass().getDeclaredFields()) {
       field.setAccessible(true);
@@ -202,7 +223,35 @@ public class SesionFactoria {
               && valor == null) {
             throw new RuntimeException(String.format(ORM.COLUMNA_NULA, field.getName()));
           }
-          mapaParametrosSql.addValue(nombreCampoValor, field.get(objeto));
+
+          Object valueFinal = field.get(objeto);
+
+          if (foraneos.containsKey(field.getName())) {
+            Map<Class, Map<String, Object>> claseMapa = camposMapaForaneos.get(field.getName());
+            String campoId = (String) claseMapa.get(field.getType()).get(ORM.ID);
+
+            try {
+              Object c = field.get(objeto);
+
+              for (Field field2 : c.getClass().getDeclaredFields()) {
+                field2.setAccessible(true);
+                if (field2.getName().equals(campoId)) {
+                  valueFinal = field2.get(c);
+                }
+
+              }
+
+            } catch (IllegalArgumentException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            } catch (IllegalAccessException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+          }
+
+
+          mapaParametrosSql.addValue(nombreCampoValor, valueFinal);
         } catch (IllegalArgumentException e) {
           e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -214,6 +263,11 @@ public class SesionFactoria {
     return database.ejecutarDml(sql, mapaParametrosSql);
   }
 
+  /**
+   * Metodo que permita eliminar un objeto dado el modelo cargado por el usuario
+   * @param objeto Objeto mapeado a eliminarse en la base de datos
+   * @return La cantidad de filas afectadas
+   */
   public int eliminar(Object objeto) {
     Map<String, Object> mapa = clasesMap.get(objeto.getClass());
 
@@ -232,15 +286,43 @@ public class SesionFactoria {
     MapSqlParameterSource mapaParametrosSql = new MapSqlParameterSource();
     Map<String, String> nombreCampos = (Map<String, String>) mapa.get(ORM.NOMBRE_COLUMNA);
     Map<String, Boolean> camposNulos = (Map<String, Boolean>) mapa.get(ORM.COLUMNA_NULA);
+    Map<String, Map<Class, Map<String, Object>>> camposMapaForaneos =
+        (Map<String, Map<Class, Map<String, Object>>>) mapa.get(ORM.MAPA_FORANEOS);
+    Map<String, String> foraneos = (Map<String, String>) mapa.get(ORM.FORANEOS);
 
     for (Field field : objeto.getClass().getDeclaredFields()) {
       field.setAccessible(true);
       String nombreCampoValor = nombreCampos.get(field.getName());
       if (nombreCampoValor != null && !nombreCampoValor.equals("")) {
         try {
+          Object valueFinal = field.get(objeto);
+
+          if (foraneos.containsKey(field.getName())) {
+            Map<Class, Map<String, Object>> claseMapa = camposMapaForaneos.get(field.getName());
+            String campoId = (String) claseMapa.get(field.getType()).get(ORM.ID);
+
+            try {
+              Object c = field.get(objeto);
+
+              for (Field field2 : c.getClass().getDeclaredFields()) {
+                field2.setAccessible(true);
+                if (field2.getName().equals(campoId)) {
+                  valueFinal = field2.get(c);
+                }
+
+              }
+
+            } catch (IllegalArgumentException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            } catch (IllegalAccessException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+          }
 
 
-          mapaParametrosSql.addValue(nombreCampoValor, field.get(objeto));
+          mapaParametrosSql.addValue(nombreCampoValor, valueFinal);
         } catch (IllegalArgumentException e) {
           e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -254,7 +336,7 @@ public class SesionFactoria {
 
   private String getIdColumna(Object object) {
     if (object == null) {
-
+      throw new RuntimeErrorException(null, "El id no puede ser nulo");
     }
     return (String) object;
   }

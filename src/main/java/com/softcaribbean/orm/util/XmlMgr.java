@@ -46,6 +46,11 @@ public class XmlMgr {
     return properties;
   }
 
+  /**
+   * Metodo que permite buscar recursivamente en las etiquetas
+   * @param nodeList Lista de nodos
+   * @param propiedades Propiedades
+   */
   private void printNote(NodeList nodeList, Properties propiedades) {
 
     for (int count = 0; count < nodeList.getLength(); count++) {
@@ -54,10 +59,6 @@ public class XmlMgr {
 
       // make sure it's element node.
       if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
-
-        // get node name and value
-        //System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
-        // System.out.println("Node Value =" + tempNode.getTextContent());
 
         if ((tempNode.getNodeName().equals(ORM.PROPIEDAD) ||  tempNode.getNodeName().equals(ORM.MAPEADOR))
             && tempNode.hasAttributes()) {

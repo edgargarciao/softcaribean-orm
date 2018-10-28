@@ -27,7 +27,7 @@ public class Configuracion {
 
     String nombrePaqueteEscanear = propiedades.getProperty(ORM.MAPEADOR);
     List<Class<?>> classes = ClassMgr.getInstance().getClassesInPackage(nombrePaqueteEscanear);
-    clases = ClassMgr.getInstance().cargarAnotaciones(clases, classes);
+    clases = new ClassMgr().cargarAnotaciones(clases, classes);
 
   }
 

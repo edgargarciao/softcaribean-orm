@@ -19,17 +19,11 @@ import com.softcaribbean.orm.constants.ORM;
 
 public class ClassMgr {
 
-  // private static ClassMgr classMgr;
-
-  private ClassMgr() {
-    // classMgr = new ClassMgr();
+  public ClassMgr() {
+  
   }
 
   public static ClassMgr getInstance() {
-    // if (classMgr == null) {
-    // classMgr = new ClassMgr();
-    // }
-    // return classMgr;
     return new ClassMgr();
   }
 
